@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using HtmlAgilityPack;
-using Newtonsoft.Json;
 using static NoHomework.Global;
+
 namespace NoHomework
 {
     public partial class Form1 : Form
@@ -59,7 +53,6 @@ namespace NoHomework
 
                 if (LoginObj.msg == "登录成功")
                 {
-                    Main main = new Main();
                     this.Hide();
                     main.Show();
                 }
@@ -74,6 +67,7 @@ namespace NoHomework
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
         }
 
 

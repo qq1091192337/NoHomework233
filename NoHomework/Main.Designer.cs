@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.Chinese = new System.Windows.Forms.RadioButton();
@@ -41,7 +42,7 @@
             this.Chemical = new System.Windows.Forms.RadioButton();
             this.Biology = new System.Windows.Forms.RadioButton();
             this.Geography = new System.Windows.Forms.RadioButton();
-            this.button2 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +66,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "作业";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(309, 49);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 143);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "做题";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -191,21 +202,21 @@
             this.Geography.UseVisualStyleBackColor = true;
             this.Geography.CheckedChanged += new System.EventHandler(this.Subject_Changed);
             // 
-            // button2
+            // label2
             // 
-            this.button2.Location = new System.Drawing.Point(309, 49);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 143);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "做题";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(408, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 12);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "BY:1091192337";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.Geography);
             this.Controls.Add(this.Biology);
             this.Controls.Add(this.Chemical);
@@ -243,5 +254,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label2;
     }
 }

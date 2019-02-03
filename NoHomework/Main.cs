@@ -17,37 +17,41 @@ namespace NoHomework
         {
             InitializeComponent();
         }
-        public static List<string> HomeworksPointer=new List<string>();
-        public static Dictionary<string, HomeWork_Data> Homeworks=new Dictionary<string, HomeWork_Data>();
-        
+        public static List<string> HomeworksPointer = new List<string>();
+        public static Dictionary<string, HomeWork_Data> Homeworks = new Dictionary<string, HomeWork_Data>();
+
         private void Main_Load(object sender, EventArgs e)
         {
             lastLabel = label1;
+
             lastButton = button1;
+
             B_cnt = 0;
 
             this.Text = $"欢迎你：“{LoginObj.data.realName}”";
 
-            label1.Text = LoginObj_2.data.classId==39?$"{LoginObj_2.data.classId}（老黑的班）":$"{LoginObj_2.data.classId}";
+            label1.Text = LoginObj_2.data.classId == 39 ? $"{LoginObj_2.data.classId}（老黑的班）" : $"{LoginObj_2.data.classId}";
 
             //CreateLabel($"{LoginObj_2.data.}")
         }
-        int cnt = 2, deltaY = 25 - 9;
-        Label lastLabel;
+
+        private int cnt = 2, deltaY = 25 - 9;
+        private Label lastLabel;
         private void CreateLabel(string Text)
         {
 
             Label label = new Label();
             label.AutoSize = true;
-            label.Location = new System.Drawing.Point(12, lastLabel.Location.Y+deltaY);
-            label.Name = "label"+cnt.ToString();
+            label.Location = new System.Drawing.Point(12, lastLabel.Location.Y + deltaY);
+            label.Name = "label" + cnt.ToString();
             label.Size = new System.Drawing.Size(41, 12);
-            label.TabIndex = cnt-1;
+            label.TabIndex = cnt - 1;
             label.Text = Text;
-            cnt++;lastLabel = label;
+            cnt++; lastLabel = label;
         }
-        Button lastButton;
-        int B_cnt;
+
+        private Button lastButton;
+        private int B_cnt;
 
         //private Button CreateButton(string Text)
         //{
@@ -77,21 +81,36 @@ namespace NoHomework
         //    }
 
         //    return button;
-            
+
         //}
         private void RefreshList()
         {
             foreach (var item in HomeworksPointer)
             {
-                listBox1.Items.Add(item);
+                if ((Homeworks[item].finishTime - DateTime.Now).Days <= 1 && (Homeworks[item].finishTime - DateTime.Now).Days >
+                    0)
+                {
+                    listBox1.Items.Add($"{item}（今天要完成的）");
+                }
+                else
+                {
+                    listBox1.Items.Add($"{item}");
+                }
+
             }
         }
         private void Subject_Changed(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
+
             string tag = (sender as RadioButton).Name;
             int sid = 0;
             if (!(sender as RadioButton).Checked) return;
+            HomeworksPointer.Clear();
+
+            Homeworks.Clear();
+
+            listBox1.Items.Clear();
+            //Dictionary<string, HomeWork_Data> Homeworks = new Dictionary<string, HomeWork_Data>();
             switch (tag)
             {
                 case "Chinese":
@@ -153,9 +172,13 @@ namespace NoHomework
 
                 string sRemoteInfo = System.Text.Encoding.UTF8.GetString(byRemoteInfo);
 
-                homeWork = JsonConvert.DeserializeObject<HomeWork_Root>(sRemoteInfo);
+                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
 
-                if(homeWork==null)
+                jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
+                homeWork = JsonConvert.DeserializeObject<HomeWork_Root>(sRemoteInfo, jsonSerializerSettings);
+
+                if (homeWork == null)
                 {
                     MessageBox.Show(homeWork.msg);
                 }
@@ -169,10 +192,10 @@ namespace NoHomework
                 }
                 RefreshList();
                 //MessageBox.Show(stringBuilder.ToString());
-            } 
+            }
 
-            
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "引发异常", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -182,7 +205,7 @@ namespace NoHomework
         {
             HomeWork_Data data = Homeworks[HomeworksPointer[listBox1.SelectedIndex]];
             StringBuilder sb = new StringBuilder();
-            sb.Append("提交状态"+data.submitState);
+            sb.Append("提交状态" + data.submitState);
             sb.Append('\n');
             sb.Append("完成时间：" + data.finishTime);
             MessageBox.Show(sb.ToString());
@@ -194,7 +217,7 @@ namespace NoHomework
 
             System.Collections.Specialized.NameValueCollection PostVars = new System.Collections.Specialized.NameValueCollection();
 
-            PostVars.Add("token",LoginObj.data.andToken);
+            PostVars.Add("token", LoginObj.data.andToken);
 
             PostVars.Add("taskId", Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId.ToString());
 
@@ -208,13 +231,14 @@ namespace NoHomework
 
             string sRemoteInfo = System.Text.Encoding.UTF8.GetString(byRemoteInfo);
 
-            questions= JsonConvert.DeserializeObject<Questions_Root>(sRemoteInfo);
+            questions = JsonConvert.DeserializeObject<Questions_Root>(sRemoteInfo);
 
-            if(questions!=null)
+            if (questions != null)
             {
-                DoHomework doHomework = new DoHomework();
 
                 this.Hide();
+
+                doHomework.taskId = Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId;
 
                 doHomework.Show();
             }

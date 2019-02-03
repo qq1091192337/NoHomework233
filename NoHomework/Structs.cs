@@ -228,7 +228,37 @@ namespace NoHomework
         /// </summary>
         public int allTeaType { get; set; }
     }
-
+    public class Question_Children
+    {
+        /// <summary>
+        /// 单选题
+        /// </summary>
+        public string teaType { get; set; }
+        /// <summary>
+        /// TeaOption
+        /// </summary>
+        public List<string> teaOption { get; set; }
+        /// <summary>
+        /// TeaScore
+        /// </summary>
+        public float teaScore { get; set; }
+        /// <summary>
+        /// TeaId
+        /// </summary>
+        public int teaId { get; set; }
+        /// <summary>
+        /// TeaChildId
+        /// </summary>
+        public int teaChildId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string teaTitle { get; set; }
+        /// <summary>
+        /// 1
+        /// </summary>
+        public string teaCode { get; set; }
+    }
     public class Question_Data
     {
         /// <summary>
@@ -246,7 +276,7 @@ namespace NoHomework
         /// <summary>
         /// Children
         /// </summary>
-        public List<string> children { get; set; }
+        public List<Question_Children> children { get; set; }
         /// <summary>
         /// TeaScore
         /// </summary>
@@ -298,5 +328,29 @@ namespace NoHomework
     }
 
     #endregion
+    #region Answer
+    public class Words_resultItem
+    {
+        /// <summary>
+        /// 1.下列条约中,均有割地、赔款、开埠通商条款的有
+        /// </summary>
+        public string words { get; set; }
+    }
 
+    public class Answer_Root
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string log_id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int words_result_num { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Words_resultItem> words_result { get; set; }
+    }
+    #endregion
 }

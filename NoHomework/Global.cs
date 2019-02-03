@@ -19,6 +19,22 @@ namespace NoHomework
 
         public static Questions_Root questions = new Questions_Root();
 
+        public static DoHomework doHomework = new DoHomework();
+
+        public static Main main = new Main();
+
+        public static string Path_Data = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+
+        public static string Path_Image = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Image.hmk");
+
+        public static string Path_Question = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Question");
+
+        public static string AccessToken = "24.3eec1f1615da335faa149b8c9e34546d.2592000.1551771574.282335-15529672";
+
+        public static string SecretToken = "IiXSB9Emca84lqlGU3kFSlQW9VAeMDcf";
+
+        public static string ApiKey = "oojd7mh98lTehquAk9cr0VzC";
+
         public static string GetOutLineIPAddress()
         {
             string url = "https://www.ipip.net/ip/223.91.11.73.html";
@@ -42,6 +58,15 @@ namespace NoHomework
 
             }
             return string.Empty;
+        }
+
+        public static byte[] imageToByte(System.Drawing.Image _image)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            _image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            return ms.ToArray();
         }
 
         public static void ShutDown()
