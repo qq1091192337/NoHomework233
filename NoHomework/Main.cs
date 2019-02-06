@@ -1,12 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static NoHomework.Global;
 namespace NoHomework
@@ -18,6 +13,7 @@ namespace NoHomework
             InitializeComponent();
         }
         public static List<string> HomeworksPointer = new List<string>();
+
         public static Dictionary<string, HomeWork_Data> Homeworks = new Dictionary<string, HomeWork_Data>();
 
         private void Main_Load(object sender, EventArgs e)
@@ -32,11 +28,28 @@ namespace NoHomework
 
             label1.Text = LoginObj_2.data.classId == 39 ? $"{LoginObj_2.data.classId}（老黑的班）" : $"{LoginObj_2.data.classId}";
 
+            label3.Text = CheckHomework() ? "恭喜！今天的作业已完成！" : "";
+
             //CreateLabel($"{LoginObj_2.data.}")
         }
-
+        private bool CheckHomework()
+        {
+            foreach (var item in HomeworksPointer)
+            {
+                if(Homeworks[item].submitState=="未提交")
+                {
+                    if ((Homeworks[item].finishTime-DateTime.Now)<new TimeSpan(1,0,0,0)&&(Homeworks[item].finishTime-DateTime.Now)>new TimeSpan(0,0,0,0))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         private int cnt = 2, deltaY = 25 - 9;
+
         private Label lastLabel;
+
         private void CreateLabel(string Text)
         {
 
@@ -240,7 +253,15 @@ namespace NoHomework
 
                 doHomework.taskId = Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId;
 
+                if(doHomework!=null)
+                {
+                    doHomework.Dispose();
+
+                }
+                doHomework = new DoHomework();
+                
                 doHomework.Show();
+
             }
 
         }

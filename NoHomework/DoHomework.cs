@@ -1,43 +1,44 @@
 ﻿using Baidu.Aip.Ocr;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
+using NoHomework.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Windows.Forms;
-using System.Xml;
 using Tesseract;
 using static NoHomework.Global;
+
 namespace NoHomework
 {
     public partial class DoHomework : Form
     {
         public int taskId { get; set; }
 
-        public string tmpFilePath { get { return Path.Combine(Path_Data, taskId.ToString()); } }
+        public string tmpFilePath { get { return Path.Combine(Path_Data, questions.task.taskName); } }
+
+
 
         public DoHomework()
         {
+            
+            //webBrowser1.Navigate("http://www.baidu.com/s?wd=" + HttpUtility.UrlEncode(input, Encoding.GetEncoding("gb2312")));
             InitializeComponent();
         }
 
         private List<Image> List_images = new List<Image>();
 
-        private List<string> List_Questions = new List<string>();
+        private string[] List_Questions = new string[55];
 
+        
         private void DoHomework_Load(object sender, EventArgs e)
         {
             this.Text = questions.task.taskName;
-
-
-
+            int cnt = 0;
             foreach (var item in questions.data)
             {
                 HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
@@ -46,7 +47,7 @@ namespace NoHomework
 
                 HtmlNodeCollection hrefList = doc.DocumentNode.SelectNodes(".//img[@src]");
 
-                if (hrefList != null)
+                if (hrefList != null&& doc.DocumentNode.SelectNodes("/p/strong/span")==null)
                 {
                     foreach (HtmlNode href in hrefList)
                     {
@@ -66,11 +67,41 @@ namespace NoHomework
                             break;
                         }
                     }
-
                 }
+                else
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    HtmlNodeCollection _hrefList = doc.DocumentNode.SelectNodes("/p/strong/span");
+                    //*[@id="sogou_wrap_id"]
+                    if (_hrefList != null)
+                    {
+
+                        foreach (HtmlNode href in _hrefList)
+                        {
+
+                            stringBuilder.Append(href.InnerText);
+                        }
+                        stringBuilder.Replace("&nbsp;", "");
+                    }
+
+                    Image _image = Resources.NO;/*Image.FromFile(Path.Combine(Path_Data, "NO.png"));*/
+ 
+                    if(_image!=null)
+                    {
+                        imageList1.Images.Add(_image);
+
+                        List_images.Add(_image);
+
+                        List_Questions[cnt]=stringBuilder.ToString();
+
+                    }
+                }
+                cnt++;
             }
 
             listView1.LargeImageList = imageList1;
+
             listView1.BeginUpdate();
             for (int i = 0; i < imageList1.Images.Count; i++)
             {
@@ -107,7 +138,20 @@ namespace NoHomework
             if (listView1.SelectedItems.Count != 0)
             {
                 pictureBox1.Image = List_images[listView1.SelectedItems[0].Index];
+                if (!File.Exists(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString()+".html")))
+                {
+                    if (!Directory.Exists(tmpFilePath)) Directory.CreateDirectory(tmpFilePath);
+                    using (StreamWriter streamWriter = new StreamWriter(File.Create(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString() + ".html")),Encoding.UTF8))
+                    {
+                        streamWriter.Write(questions.data[listView1.SelectedItems[0].Index].teaTitle);
+                    }
+                }
+                using (StreamReader streamReader = new StreamReader(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString() + ".html")))
+                {
 
+                    webBrowser1.Url = new Uri(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString() + ".html"));
+                    //button5.Enabled = false;
+                }
                 if (!Directory.Exists(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString())))
                 {
                     Directory.CreateDirectory(tmpFilePath);
@@ -118,9 +162,16 @@ namespace NoHomework
                     using (StreamReader streamReader = new StreamReader(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString())))
                     {
                         textBox1.Text=streamReader.ReadToEnd();
+
                         button5.Enabled = false;
+
                         return;
+
                     }
+                }
+                if(List_Questions.Length!=0)
+                {
+                    textBox1.Text = List_Questions[listView1.SelectedItems[0].Index];
                 }
                 button5.Enabled = true;
                 //var ocr = new TesseractEngine("./tessdata", "chi_sim", EngineMode.TesseractOnly);
@@ -141,15 +192,17 @@ namespace NoHomework
             }
             else
             {
-                MessageBox.Show("因为这个功能我觉得大部分人也不一定会用，所以就没有做");
+                  MessageBox.Show("因为这个功能我觉得大部分人也不一定会用，所以就没有做");
             }
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
+            if (textBox1.Text != string.Empty)
+            {
+                CallWebBrowser("http://www.baidu.com/s?wd=" + HttpUtility.UrlEncode(textBox1.Text.Trim(), Encoding.GetEncoding("gb2312")));
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -164,6 +217,7 @@ namespace NoHomework
 
         private void button5_Click(object sender, EventArgs e)
         {
+            if (listView1.SelectedItems[0].Index < 0) return;
 
             if(List_images[listView1.SelectedItems[0].Index]!=null)
             {
@@ -173,7 +227,7 @@ namespace NoHomework
 
                 var _bytes = imageToByte(List_images[listView1.SelectedItems[0].Index]);
 
-                var jObj= ocr.GeneralBasic(_bytes);
+                var jObj= this.Text.IndexOf("数学")<0?ocr.GeneralBasic(_bytes):ocr.AccurateBasic(_bytes);
 
                 var Answer = jObj.ToObject<Answer_Root>();
 
@@ -186,12 +240,12 @@ namespace NoHomework
                 {
                     foreach (var item in Answer.words_result)
                     {
-                        streamWriter.Write(item.words);
+                        streamWriter.Write(item.words+'\n');
                     }
                 }
                 foreach (var item in Answer.words_result)
                 {
-                    textBox1.Text += item.words;
+                    textBox1.Text += (item.words+'\n');
                 }
                 button5.Enabled = false;
             }
@@ -204,7 +258,33 @@ namespace NoHomework
         private void button6_Click(object sender, EventArgs e)
         {
             this.Hide();
+
             main.Show();
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            //if (File.Exists(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString())))
+            //{
+            //    using (StreamWriter streamWriter = new StreamWriter(Path.Combine(tmpFilePath, listView1.SelectedItems[0].Index.ToString())))
+            //    {
+            //        streamWriter.Write(textBox1.Text);
+
+            //        List_Questions[listView1.SelectedItems[0].Index] = textBox1.Text;
+
+            //        return;
+            //    }
+            //}
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

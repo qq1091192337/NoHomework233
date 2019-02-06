@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoHomework", "NoHomework\NoHomework.csproj", "{2C05132C-D34E-4B8F-A4E7-E4CD55A785CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHttp", "TestHttp\TestHttp.csproj", "{7B3FC442-A172-404E-B47C-D1487420FDD0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkPicker", "HomeworkPicker\HomeworkPicker.csproj", "{8155590D-6688-4B48-A1FE-BE780711B109}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaiduAccessKey", "BaiduAccessKey\BaiduAccessKey.csproj", "{10E989FB-F585-48AC-BF4B-89A00C626A65}"
@@ -21,10 +19,6 @@ Global
 		{2C05132C-D34E-4B8F-A4E7-E4CD55A785CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C05132C-D34E-4B8F-A4E7-E4CD55A785CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C05132C-D34E-4B8F-A4E7-E4CD55A785CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B3FC442-A172-404E-B47C-D1487420FDD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B3FC442-A172-404E-B47C-D1487420FDD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B3FC442-A172-404E-B47C-D1487420FDD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B3FC442-A172-404E-B47C-D1487420FDD0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8155590D-6688-4B48-A1FE-BE780711B109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8155590D-6688-4B48-A1FE-BE780711B109}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8155590D-6688-4B48-A1FE-BE780711B109}.Release|Any CPU.ActiveCfg = Release|Any CPU

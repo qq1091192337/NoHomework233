@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using static NoHomework.Global;

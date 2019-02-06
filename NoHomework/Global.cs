@@ -60,6 +60,11 @@ namespace NoHomework
             return string.Empty;
         }
 
+        public static void CallWebBrowser(string URL)
+        {
+            System.Diagnostics.Process.Start(URL);
+        }
+        
         public static byte[] imageToByte(System.Drawing.Image _image)
         {
             MemoryStream ms = new MemoryStream();
