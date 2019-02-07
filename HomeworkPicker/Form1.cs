@@ -226,6 +226,14 @@ namespace HomeworkPicker
             }
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+                using (StreamWriter streamWriter =new StreamWriter(Application.StartupPath + "\\phone_vaild.txt"))
+                {
+                streamWriter.WriteLine(JsonConvert.SerializeObject(PhoneNumberAndOwner));
+                }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = "已响应："+CNT.ToString();

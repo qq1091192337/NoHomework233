@@ -23,7 +23,33 @@ namespace NoHomework
 
         public static Main main = new Main();
 
+        //public static List<string> PhoneNumbers
+        //{
+        //    get
+        //    {
+        //        if (File.Exists(Path.Combine(Path_Hack, "PhoneNumbers.hck")))
+        //        {
+        //            using (StreamReader streamReader =new StreamReader(Path.Combine(Path_Hack, "PhoneNumbers.hck")))
+        //            {
+        //                string str= streamReader.ReadToEnd();
+        //                string[] tmp = str.Split('\n');
+        //                foreach (var item in tmp)
+        //                {
+        //                    if (item != "") PhoneNumbers.Add(item.Remove(item.Length - 1));
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //    set
+        //    {
+
+        //    }
+        //}
+
         public static string Path_Data = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+
+        public static string Path_Hack = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hack");
 
         public static string Path_Image = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Image.hmk");
 

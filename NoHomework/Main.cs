@@ -266,6 +266,43 @@ namespace NoHomework
 
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+
+                System.Net.WebClient WebClientObj = new System.Net.WebClient();
+
+                System.Collections.Specialized.NameValueCollection PostVars = new System.Collections.Specialized.NameValueCollection();
+
+                PostVars.Add("token", LoginObj.data.andToken);
+
+                PostVars.Add("taskId", Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId.ToString());
+
+                PostVars.Add("stuId", LoginObj_2.data.stuId.ToString());
+
+                PostVars.Add("classId", LoginObj_2.data.classId.ToString());
+
+                WebClientObj.Encoding = Encoding.UTF8;
+
+                byte[] byRemoteInfo = WebClientObj.UploadValues("http://xxzy.xinkaoyun.com:8081/holidaywork/student/getTaskInfo?0.6596327046934594", "POST", PostVars);
+
+                string sRemoteInfo = System.Text.Encoding.UTF8.GetString(byRemoteInfo);
+
+                questions = JsonConvert.DeserializeObject<Questions_Root>(sRemoteInfo);
+            
+
+            if (listBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("你还没选中作业呢");
+                return;
+            }
+
+            HomeworkHacker homeworkHacker = new HomeworkHacker() { Handle_Question = questions, TaskId = Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId.ToString() };
+            //homeworkHacker.TaskId = Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId.ToString();
+            this.Hide();
+            homeworkHacker.Show();
+        }
+
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             ShutDown();
