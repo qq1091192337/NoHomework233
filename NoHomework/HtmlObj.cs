@@ -10,6 +10,6 @@ namespace NoHomework
     public class HtmlObj
     {
         HtmlWeb htmlWeb;
-
+        Dictionary<Root_1,string> keyValuePairs;
     }
 }

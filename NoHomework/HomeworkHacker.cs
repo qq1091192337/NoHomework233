@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static NoHomework.Global;
 namespace NoHomework
@@ -130,6 +125,7 @@ namespace NoHomework
             else
             {
                 MessageBox.Show("未获取到PhoneList");
+
                 main.Show();
                 this.Dispose();
             }
@@ -255,17 +251,32 @@ namespace NoHomework
                 if (!File.Exists(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + ".html")))
                 {
                     if (!Directory.Exists(Hack_tmpFilePath)) Directory.CreateDirectory(Hack_tmpFilePath);
+
                     using (StreamWriter streamWriter = new StreamWriter(File.Create(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + ".html")), Encoding.UTF8))
                     {
                         streamWriter.Write(Handle_Root.data[listBox1.SelectedIndex].teaAnswer);
                     }
                 }
+                if (!File.Exists(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + "_Resolve.html")))
+                {
+                    if (!Directory.Exists(Hack_tmpFilePath)) Directory.CreateDirectory(Hack_tmpFilePath);
+
+                    using (StreamWriter streamWriter = new StreamWriter(File.Create(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + "_Resolve.html")), Encoding.UTF8))
+                    {
+                        streamWriter.Write(Handle_Root.data[listBox1.SelectedIndex].teaResolve);
+                    }
+                }
+
                 using (StreamReader streamReader = new StreamReader(Path.Combine(Hack_tmpFilePath,listBox1.SelectedIndex.ToString() + ".html")))
                 {
                     webBrowser1.Url = new Uri(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + ".html"));
                     //button5.Enabled = false;
                 }
-
+                using (StreamReader streamReader = new StreamReader(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + "_Resolve.html")))
+                {
+                    webBrowser2.Url = new Uri(Path.Combine(Hack_tmpFilePath, listBox1.SelectedIndex.ToString() + "_Resolve.html"));
+                    //button5.Enabled = false;
+                }
                 //webBrowser1.Url = Handle_Root.data[listBox1.SelectedIndex].teaTitle;
             }
         }
@@ -273,8 +284,8 @@ namespace NoHomework
         private void HomeworkHacker_FormClosing(object sender, FormClosingEventArgs e)
         {
             main.Show();
-            this.Dispose();
 
+            this.Dispose();
         }
     }
     public static class Helper

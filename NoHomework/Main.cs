@@ -22,7 +22,7 @@ namespace NoHomework
 
             lastButton = button1;
 
-            B_cnt = 0;
+            B_cnt = 0; 
 
             this.Text = $"欢迎你：“{LoginObj.data.realName}”";
 
@@ -226,6 +226,7 @@ namespace NoHomework
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (listBox1.SelectedIndex < 0) return;
             System.Net.WebClient WebClientObj = new System.Net.WebClient();
 
             System.Collections.Specialized.NameValueCollection PostVars = new System.Collections.Specialized.NameValueCollection();
