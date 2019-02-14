@@ -16,15 +16,23 @@ namespace NoHomework
 {
     public partial class DoHomework : Form
     {
+
+        public struct StructSubmit
+        {
+            public int TeaType;
+            public int TaskId;
+        }
         public int taskId { get; set; }
 
+        public int TeaType { get; set; }
         public string tmpFilePath { get { return Path.Combine(Path_Data, questions.task.taskName); } }
 
 
-
-        public DoHomework()
+        Questions_Root _Root = new Questions_Root();
+        public DoHomework(StructSubmit submit,Questions_Root root)
         {
-            
+            taskId = submit.TaskId;
+            TeaType = submit.TeaType;
             //webBrowser1.Navigate("http://www.baidu.com/s?wd=" + HttpUtility.UrlEncode(input, Encoding.GetEncoding("gb2312")));
             InitializeComponent();
         }
@@ -106,7 +114,7 @@ namespace NoHomework
             {
                 ListViewItem listViewItem = new ListViewItem();
                 listViewItem.ImageIndex = i;
-                listViewItem.Text = "题目" + i.ToString();
+                listViewItem.Text = "题目" + (i+1).ToString();
                 listView1.Items.Add(listViewItem);
 
             }
@@ -191,7 +199,9 @@ namespace NoHomework
             }
             else
             {
-                  MessageBox.Show("因为这个功能我觉得大部分人也不一定会用，所以就没有做");
+                Submit submit = new Submit(questions, taskId);
+                submit.Show();
+                  //MessageBox.Show("因为这个功能我觉得大部分人也不一定会用，所以就没有做");
             }
 
         }

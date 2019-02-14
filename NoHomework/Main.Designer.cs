@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -44,7 +45,7 @@
             this.Geography = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +70,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "作业";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(309, 198);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 198);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "骇入";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -224,21 +235,22 @@
             this.label3.Size = new System.Drawing.Size(0, 28);
             this.label3.TabIndex = 12;
             // 
-            // button3
+            // button4
             // 
-            this.button3.Location = new System.Drawing.Point(309, 198);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 198);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "骇入";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button4.Location = new System.Drawing.Point(410, 390);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(104, 40);
+            this.button4.TabIndex = 13;
+            this.button4.Text = "互评作业";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Geography);
@@ -281,5 +293,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }

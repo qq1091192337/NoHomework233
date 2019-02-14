@@ -101,8 +101,13 @@ namespace NoHomework
 
         private void HomeworkHacker_Load(object sender, EventArgs e)
         {
-            int successCNT = 0;Root_1 root_Now = new Root_1();var Detail_Now = new Root_2();
+            int successCNT = 0;
+            Root_1 root_Now = new Root_1();
+
+            var Detail_Now = new Root_2();
+
             this.Text = Handle_Question.task.taskName;
+
             if (!Directory.Exists(Hack_tmpFilePath)) Directory.CreateDirectory(Hack_tmpFilePath);
             ////LoginInstance loginInstance = new LoginInstance();
             ////AddColumn("ID", 50);

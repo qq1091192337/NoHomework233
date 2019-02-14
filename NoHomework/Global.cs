@@ -19,7 +19,7 @@ namespace NoHomework
 
         public static Questions_Root questions = new Questions_Root();
 
-        public static DoHomework doHomework = new DoHomework();
+        public static DoHomework doHomework = new DoHomework(new DoHomework.StructSubmit(),new Questions_Root());
 
         public static Main main = new Main();
 

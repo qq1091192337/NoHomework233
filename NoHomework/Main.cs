@@ -112,11 +112,12 @@ namespace NoHomework
 
             }
         }
+        private int sid = 0;
         private void Subject_Changed(object sender, EventArgs e)
         {
 
             string tag = (sender as RadioButton).Name;
-            int sid = 0;
+            sid = 0;
             if (!(sender as RadioButton).Checked) return;
             HomeworksPointer.Clear();
 
@@ -203,6 +204,7 @@ namespace NoHomework
                     //stringBuilder.Append(item.taskName+'\n');
                     //buttons.Add(CreateButton($"{item.taskName}\n{item.finishTime}之前完成")); 
                 }
+                
                 RefreshList();
                 //MessageBox.Show(stringBuilder.ToString());
             }
@@ -259,7 +261,7 @@ namespace NoHomework
                     doHomework.Dispose();
 
                 }
-                doHomework = new DoHomework();
+                doHomework = new DoHomework(new DoHomework.StructSubmit() { TaskId = Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId },questions);
                 
                 doHomework.Show();
 
@@ -302,6 +304,12 @@ namespace NoHomework
             //homeworkHacker.TaskId = Homeworks[HomeworksPointer[listBox1.SelectedIndex]].taskId.ToString();
             this.Hide();
             homeworkHacker.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Comment comment = new Comment(sid) { Handle_Question=questions};
+            comment.Show();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
